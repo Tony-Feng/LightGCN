@@ -68,4 +68,7 @@ def parse_args():
     parser.add_argument('--report', type=int, default=0,
                         help='0: Disable performance report w.r.t. sparsity levels, 1: Show performance report w.r.t. sparsity levels')
 
+    parser.add_argument('--eval_run', type=int, default=20,
+                        help='Every `eval_run` epochs, the precision will be evaluated on the test dataset')
+
     return parser.parse_args()

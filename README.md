@@ -109,4 +109,46 @@ We provide three processed datasets: Gowalla, Yelp2018 and Amazon-book.
   * Parallelized sampling on CPU
   * C++ evaluation for top-k recommendation
 
-=======
+---
+
+## Note
+
+1. The code has been tested running under Python 3.7.10. The used packages are as follows:
+* tensorflow == 2.4.1
+* numpy == 1.19.2
+* scipy == 1.6.3
+* scikit-learn == 0.24.2
+* cython == 0.29.23
+
+2. Tested with the following command:
+```
+noglob python LightGCN.py --dataset gowalla --regs [1e-4] --embed_size 64 --layer_size [64,64,64] --lr 0.001 --batch_size 2048 --epoch 10
+```
+This takes ~500s to run 1 epoch. Didn't complete the running.
+
+3. Added `eval_run` flag and ran again:
+```
+noglob python LightGCN.py --dataset gowalla --regs [1e-4] --embed_size 64 --layer_size [64,64,64] --lr 0.001 --batch_size 2048 --epoch 5 --eval_run 5
+```
+Output log of the quick run:
+```
+eval_score_matrix_foldout with cpp
+n_users=29858, n_items=40981
+n_interactions=1027370
+n_train=810128, n_test=217242, sparsity=0.00084
+WARNING:tensorflow:From /Users/yiwen.feng/opt/anaconda3/envs/tf2/lib/python3.7/site-packages/tensorflow/python/compat/v2_compat.py:96: disable_resource_variables (from tensorflow.python.ops.variable_scope) is deprecated and will be removed in a future version.
+Instructions for updating:
+non-resource variables are not supported in the long term
+TensorFlow version: 2.4.1
+already load adj matrix (70839, 70839) 0.21431779861450195
+use the pre adjcency matrix
+using random initialization
+without pretraining.
+Epoch 1 [526.3s]: train==[0.47256=0.47242 + 0.00014]
+Epoch 2 [503.1s]: train==[0.23174=0.23128 + 0.00046]
+Epoch 3 [488.3s]: train==[0.17427=0.17363 + 0.00063]
+Epoch 4 [485.3s]: train==[0.14453=0.14378 + 0.00075]
+Epoch 5: train==[0.12664=0.12579 + 0.00085 + 0.00000], recall=[0.08620], precision=[0.08877], ndcg=[0.12264]
+Epoch 5 [519.0s + 4.0s]: test==[0.16762=0.16673 + 0.00089 + 0.00000], recall=[0.10466], precision=[0.03313], ndcg=[0.09029]
+Best Iter=[0]@[2530.2]  recall=[0.10466], precision=[0.03313], ndcg=[0.09029]
+```
